@@ -7,8 +7,7 @@ export interface IMyReactButtonProps {
   onClick?: () => void;
 }
 
-
-export const CustomReactButton: FunctionComponent<IMyReactButtonProps> = (props: IMyReactButtonProps) => {
+export const CustomReactButton2: FunctionComponent<IMyReactButtonProps> = (props: IMyReactButtonProps) => {
   const dispatch = useDispatch();
   const counter = useSelector((state: any) => state.counter.count);
   const timerHandle = useRef<number | null>(null);

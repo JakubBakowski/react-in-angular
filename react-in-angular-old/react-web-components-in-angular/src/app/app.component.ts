@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import * as CounterActions from './store/actions/counter.actions';
+import { createReduxStore } from './store/store';
 
 @Component({
   selector: 'app-root',
@@ -10,8 +11,9 @@ import * as CounterActions from './store/actions/counter.actions';
 })
 export class AppComponent {
   public counter$: Observable<number>;
-
-  constructor(private store: Store<{ counter: { count: number } }>) {
+  public reduxStore = createReduxStore(this.store);
+  
+  constructor(public store: Store<{ counter: { count: number } }>) {
     this.counter$ = store.select(state => state.counter.count);
   }
 
@@ -20,6 +22,6 @@ export class AppComponent {
     this.store.select(state => state.counter.count).subscribe(value => {
       console.log('Counter value:', value);
     });
-    this.store.dispatch(CounterActions.increment());
+    // this.store.dispatch(CounterActions.increment());
   }
 }

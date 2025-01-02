@@ -1,3 +1,5 @@
 <div id="myReactComponentContainer">
-  <app-my-component (componentClick)="handleOnClick()"></app-my-component>
+    <app-my-component [store]="reduxStore" (componentClick)="handleOnClick()"></app-my-component>
+    <app-my-component2 [store]="reduxStore" (componentClick)="handleOnClick()"></app-my-component2>
 </div>
+
