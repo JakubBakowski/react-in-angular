@@ -6,7 +6,7 @@ import { CustomReactButton2 } from "./customReactButton2";
 import { Store } from "@ngrx/store";
 import { Provider } from "react-redux";
 import { createReduxStore } from "src/app/store/store";
-
+import { createRoot } from 'react-dom/client';
 const containerElementRef = "customReactComponentContainer2";
 
 @Component({
@@ -46,10 +46,15 @@ export class CustomReactWrapperComponent2 implements OnChanges, OnDestroy, After
     ReactDOM.unmountComponentAtNode(this.containerRef.nativeElement);
   }
 
+  private root: any;
   private render() {
     const { counter } = this;
+    if (!this.root) {
+      this.root = createRoot(this.containerRef.nativeElement);
+    }
+    const root = this.root;
 
-    ReactDOM.render(
+    root.render(
       <React.StrictMode>
           <Provider store={this.store}>
             <div>
@@ -59,8 +64,7 @@ export class CustomReactWrapperComponent2 implements OnChanges, OnDestroy, After
             </div>
           </Provider>
       </React.StrictMode>,
-      
-      this.containerRef.nativeElement
     );
   }
 }
+

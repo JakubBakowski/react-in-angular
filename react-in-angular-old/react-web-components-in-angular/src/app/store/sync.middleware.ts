@@ -9,9 +9,12 @@ const actionMap: { [key: string]: string } = {
 
 export const createSyncMiddleware = (ngStore: Store): Middleware => {
   return store => next => action => {
-    const ngRxActionType = actionMap[action.type] || action.type;
     // Forward Redux actions to NgRx
-    ngStore.dispatch({ type: ngRxActionType, payload: action.payload });
+    if(actionMap[action.type]) {
+      const ngRxActionType = actionMap[action.type] || action.type;
+      console.log('dispatching action', ngRxActionType);
+      ngStore.dispatch({ type: ngRxActionType, payload: action.payload });
+    }
     return next(action);
   };
 };

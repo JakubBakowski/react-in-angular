@@ -5,7 +5,7 @@ import * as ReactDOM from "react-dom";
 import { CustomReactButton } from "./customReactButton";
 import { Store } from "@ngrx/store";
 import { Provider } from "react-redux";
-
+import { createRoot } from 'react-dom/client';
 const containerElementRef = "customReactComponentContainer";
 
 @Component({
@@ -44,11 +44,15 @@ export class CustomReactWrapperComponent implements OnChanges, OnDestroy, AfterV
   ngOnDestroy() {
     ReactDOM.unmountComponentAtNode(this.containerRef.nativeElement);
   }
+  private root: any;
 
   private render() {
     const { counter } = this;
-
-    ReactDOM.render(
+    if (!this.root) {
+      this.root = createRoot(this.containerRef.nativeElement);
+    }
+    const root = this.root;
+    root.render(
        <React.StrictMode>
         <Provider store={this.store}>
 
@@ -59,8 +63,6 @@ export class CustomReactWrapperComponent implements OnChanges, OnDestroy, AfterV
           </div>
               </Provider>
       </React.StrictMode>
-      ,
-      this.containerRef.nativeElement
     );
   }
 }

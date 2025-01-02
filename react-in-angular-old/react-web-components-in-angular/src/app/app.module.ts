@@ -7,7 +7,7 @@ import { CustomReactWrapperComponent } from 'src/react/CustomReactWrapperCompone
 import { CustomReactWrapperComponent2 } from 'src/react/CustomReactWrapperComponent2';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
-import { StoreModule } from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import { counterReducer } from './store/reducers/counter.reducer';
 import { SyncEffects } from './store/sync.effects';
 import { createReduxStore } from './store/store';
@@ -23,15 +23,18 @@ import { AngularReactModule } from '@bubblydoo/angular-react'
   imports: [
     BrowserModule,
     StoreModule.forRoot({counter: counterReducer }),  // Pass your reducers here
-    EffectsModule.forRoot([SyncEffects]), // Pass your effects here
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
     }),
     AppRoutingModule,
-    AngularReactModule
+    AngularReactModule,
+    EffectsModule.forRoot([SyncEffects]), // Pass your effects here
   ],
-  providers: [{ provide: REDUX_STORE,
-    useValue: createReduxStore}],
+  providers: [{ 
+    provide: REDUX_STORE,
+    useFactory: (store: Store) => createReduxStore(store),
+    deps: [Store]
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

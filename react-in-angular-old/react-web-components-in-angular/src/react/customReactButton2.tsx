@@ -11,7 +11,7 @@ export const CustomReactButton2: FunctionComponent<IMyReactButtonProps> = (props
   const dispatch = useDispatch();
   const counter = useSelector((state: any) => state.counter.count);
   const timerHandle = useRef<number | null>(null);
-  const [stateCounter, setStateCounter] = useState(counter);
+  const [stateCounter, setStateCounter] = useState(0);
 
   useEffect(() => {
     timerHandle.current = +setInterval(() => {
